@@ -8,7 +8,7 @@ class Player():
         self.inventory = []
 
     def __str__(self):
-        return f"{self.name} is currently located: {self.current_room}"
+        return f"{self.name}"
 
 
-print(Player("Jack", "Outside"))
+# print(Player("Jack", "Outside"))

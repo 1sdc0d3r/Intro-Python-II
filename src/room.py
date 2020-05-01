@@ -6,7 +6,7 @@ class Room():
         self.desc = desc
 
     def __str__(self):
-        return f"You are in the {self.name}. {self.desc}"
+        return self.name
 
 
 class List(Room):
@@ -24,5 +24,5 @@ kitchen = {
     "items": ["knife", "bottle", "carrot"]
 }
 
-print(Room(kitchen["name"], kitchen["desc"]))
-print(List(kitchen["name"], kitchen["desc"], kitchen["items"]))
+# print(Room(kitchen["name"], kitchen["desc"]))
+# print(List(kitchen["name"], kitchen["desc"], kitchen["items"]))
