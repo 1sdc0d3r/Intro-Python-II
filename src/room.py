@@ -1,5 +1,5 @@
 # Implement a class to hold room information. This should have name and description attributes.
-class Room():
+class Room:
     # ? params include directions?
     def __init__(self, name, desc):
         self.name = name
@@ -23,6 +23,3 @@ kitchen = {
     "desc": "This is where the food magic happens!",
     "items": ["knife", "bottle", "carrot"]
 }
-
-# print(Room(kitchen["name"], kitchen["desc"]))
-# print(List(kitchen["name"], kitchen["desc"], kitchen["items"]))
