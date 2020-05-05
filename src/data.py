@@ -1,4 +1,5 @@
 from room import Room
+from item import Item
 
 #! Declare all rooms
 room = {
@@ -13,6 +14,12 @@ room = {
 
     'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! There appears to have been a massecure here. There are skeletons and bones scattered around. The only exit is to the south."),
 }
+item = {
+    "torch": Item("torch", "Length of wood with tar rags wrapped around one end."),
+    "key": Item("key", "Small golden key. There is an inscription in the handle but its faded."),
+    "sword": Item("Sword of Fernwood", "Sword with a bronze handle and cross. It isn't as sharp as it once was, but is better than a stick!"),
+    "shield": Item("Shield of Fernwood", "Battered and scarred round shield. It has seen many battles. It may break with a mighty blow.")
+}
 
 #! Link rooms together
 room['outside'].n_to = room['foyer']
@@ -25,6 +32,17 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 #! Add items to rooms
+# ? Is there a way to 'reach in' to the item class for the name?
 room["foyer"].items = ["torch"]
 room["overlook"].items = ["key"]
 room["treasure"].items = ["sword", "shield"]
+
+# todo change items to classes
+# room["foyer"].items.append({"torch": item["torch"]})
+# room["overlook"].items.append({"key": item["key"]})
+# room["treasure"].items.append({"sword": item["sword"]})
+# room["treasure"].items.append({"shield": item["shield"]})
+
+welcome_message = "Welcome to the dungeon game, would you like to play? (yes/no)"
+quit_message = "Sorry to see you go..."
+game_objective = "This game is a choose your own adventure game. Use your wits to navigate and discover the lost kingdom of Shalooma. Your quest is to find exotic treasures, fight monstors, and to find the Golden Cookie. This cookie is said to be guarded by fierce monsters, but gives the user eternal life and fame. Good luck on your quest Adventurer!"
