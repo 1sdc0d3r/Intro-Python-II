@@ -4,18 +4,19 @@ class Room:
     def __init__(self, name, desc):
         self.name = name
         self.desc = desc
+        self.items = None
 
     def __str__(self):
         return self.name
 
 
-class List(Room):
-    def __init__(self, name, desc, items):
-        super().__init__(name, desc)
-        self.items = items
+# class List(Room):
+#     def __init__(self, name, desc, items):
+#         super().__init__(name, desc)
+#         self.items = items
 
-    def __str__(self):
-        return f"You are in the {self.name}. {self.desc}. Items in the room are: {self.items}"
+#     def __str__(self):
+#         return f"You are in the {self.name}. {self.desc}. Items in the room are: {self.items}"
 
 
 kitchen = {
