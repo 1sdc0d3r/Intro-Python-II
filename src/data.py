@@ -14,10 +14,10 @@ room = {
 
     'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! There appears to have been a massecure here. There are skeletons and bones scattered around. The only exit is to the south."),
 }
-# 🗝⚔️🛡
+# ⚔️🛡🗝
 items = {
     "torch": LightSource("Torch", "Length of wood with tar rags wrapped around one end.", "common"),
-    "key": Item("key", "Small golden key. There is an inscription in the handle but its faded.", "common"),
+    "key": Item("Key", "Small golden key. There is an inscription in the handle but its faded.", "common"),
     "sword": Weapon("Sword of Fernwood", "Sword with a bronze handle and cross. It isn't as sharp as it once was, but is better than a stick!", "common", 5, 3),
     "shield": Shield("Shield of Fernwood", "Battered and scarred round shield. It has seen many battles. It may break with a mighty blow.", "common", 7)
 }
@@ -38,7 +38,7 @@ room["foyer"].items.append(items["key"])
 room["overlook"].items.append(items["key"])
 room["treasure"].items.append(items["sword"])
 room["treasure"].items.append(items["shield"])
-
+# print(room["foyer"].items)
 
 welcome_message = "Welcome to the dungeon game, would you like to play? (yes/no)"
 quit_message = "Sorry to see you go..."
