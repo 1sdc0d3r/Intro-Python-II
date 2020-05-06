@@ -1,5 +1,5 @@
 from room import Room
-from item import Item
+from item import Item, LightSource, Weapon, Shield
 
 #! Declare all rooms
 room = {
@@ -14,11 +14,12 @@ room = {
 
     'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! There appears to have been a massecure here. There are skeletons and bones scattered around. The only exit is to the south."),
 }
-item = {
-    "torch": Item("torch", "Length of wood with tar rags wrapped around one end."),
-    "key": Item("key", "Small golden key. There is an inscription in the handle but its faded."),
-    "sword": Item("Sword of Fernwood", "Sword with a bronze handle and cross. It isn't as sharp as it once was, but is better than a stick!"),
-    "shield": Item("Shield of Fernwood", "Battered and scarred round shield. It has seen many battles. It may break with a mighty blow.")
+# 🗝⚔️🛡
+items = {
+    "torch": LightSource("Torch", "Length of wood with tar rags wrapped around one end.", "common"),
+    "key": Item("key", "Small golden key. There is an inscription in the handle but its faded.", "common"),
+    "sword": Weapon("Sword of Fernwood", "Sword with a bronze handle and cross. It isn't as sharp as it once was, but is better than a stick!", "common", 5, 3),
+    "shield": Shield("Shield of Fernwood", "Battered and scarred round shield. It has seen many battles. It may break with a mighty blow.", "common", 7)
 }
 
 #! Link rooms together
@@ -32,19 +33,12 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 #! Add items to rooms
-# ? Is there a way to 'reach in' to the item class for the name?
-# room["foyer"].items = ["torch"]
-# room["overlook"].items = ["key"]
-# room["treasure"].items = ["sword", "shield"]
+room["foyer"].items.append(items["torch"])
+room["foyer"].items.append(items["key"])
+room["overlook"].items.append(items["key"])
+room["treasure"].items.append(items["sword"])
+room["treasure"].items.append(items["shield"])
 
-# todo change items to classes
-
-room["foyer"].items.append(item["torch"])
-room["overlook"].items.append(item["key"])
-room["treasure"].items.append(item["sword"])
-room["treasure"].items.append(item["shield"])
-# print(f"{room['foyer'].items[0].print_desc()}")
-# print(room["narrow"].n_to)
 
 welcome_message = "Welcome to the dungeon game, would you like to play? (yes/no)"
 quit_message = "Sorry to see you go..."
