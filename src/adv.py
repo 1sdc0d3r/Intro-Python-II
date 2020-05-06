@@ -6,8 +6,7 @@ from player import Player
 
 # todo create a REPL parser
 
-
-#! player = Player(input("Enter player name: "), room["outside"])
+# player = Player(input("Enter player name: "), room["outside"])
 player = Player("Jack", room["outside"])
 
 # ? allow new commands to be added as they 'unlock' them
@@ -18,19 +17,19 @@ commands = {
 }
 # get, take, inspect
 
-print(welcome_message)
-command = input("# ").lower().strip()
+#! print(welcome_message)
+#! command = input("# ").lower().strip()
 
-if command == "no":
-    print(quit_message)
-    sys.exit()
-else:
-    for line in wrap(game_objective, width=120):
-        print(line)
-    print(f"\n{player.current_room}\nUse n, s, e, w to move")
-
+#! if command == "no":
+#     print(quit_message)
+#     sys.exit()
+#! else:
+#     for line in wrap(game_objective, width=120):
+#         print(line)
+#     print(f"\n{player.current_room}\nUse n, s, e, w to move")
+command = None
 #! REPL
-while not(command == "q" or command == "quit"):
+while True:
     # * Prompt User Command
     command = input("# ").lower().strip()
 
@@ -57,19 +56,28 @@ while not(command == "q" or command == "quit"):
 
     # * Help Command
     elif command == "help":
-        while not (command == "exit" or command == "9"):
+        while True:
             print(
                 "What would you like help with?\n  [1] Game Objective [2] Commands [9] Exit")
             command = input("# ").lower().strip()
             if command == "game objective" or command == "1":
                 for line in wrap(game_objective, width=100):
                     print(line)
+
             elif command == "commands" or command == "2":
                 for key in commands:
                     print(f"{key}: {', '.join(commands[key])}")
+
+            elif (command == "exit" or command == "9"):
+                break
+            else:
+                print("Command not found...")
         print(player.current_room)
 
+    elif (command == "q" or command == "quit"):
+        break
     else:
-        # todo add save functionality
-        print(quit_message) if (command == "q" or command == "quit") else print(
-            "unknown command, for help type 'help'")
+        print("unknown command, for help type 'help'")
+
+print(quit_message)
+# todo add save functionality

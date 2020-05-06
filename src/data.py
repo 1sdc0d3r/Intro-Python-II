@@ -33,15 +33,18 @@ room['treasure'].s_to = room['narrow']
 
 #! Add items to rooms
 # ? Is there a way to 'reach in' to the item class for the name?
-room["foyer"].items = ["torch"]
-room["overlook"].items = ["key"]
-room["treasure"].items = ["sword", "shield"]
+# room["foyer"].items = ["torch"]
+# room["overlook"].items = ["key"]
+# room["treasure"].items = ["sword", "shield"]
 
 # todo change items to classes
-# room["foyer"].items.append({"torch": item["torch"]})
-# room["overlook"].items.append({"key": item["key"]})
-# room["treasure"].items.append({"sword": item["sword"]})
-# room["treasure"].items.append({"shield": item["shield"]})
+
+room["foyer"].items.append(item["torch"])
+room["overlook"].items.append(item["key"])
+room["treasure"].items.append(item["sword"])
+room["treasure"].items.append(item["shield"])
+# print(f"{room['foyer'].items[0].print_desc()}")
+# print(room["narrow"].n_to)
 
 welcome_message = "Welcome to the dungeon game, would you like to play? (yes/no)"
 quit_message = "Sorry to see you go..."

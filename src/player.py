@@ -27,7 +27,7 @@ class Player:
         print("What item would you like to pickup?")  # todo parser
         item = input("# ").lower().strip()
         # ? how to check class item name
-        print("items", self.current_room.items)
+        print("items", self.current_room.items[0].name)
         if item in self.current_room.items:
             self.inventory.append(item)
             self.current_room.items.remove(item)

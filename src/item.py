@@ -4,7 +4,10 @@ class Item:
         self.description = description
 
     def __str__(self):
-        return self.name+self.description
+        return self.name
+
+    def print_desc(self):
+        print(self.description)
 
 
 class ListSource(Item):
