@@ -14,8 +14,9 @@ room = {
 
     'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! There appears to have been a massecure here. There are skeletons and bones scattered around. The only exit is to the south."),
 }
-# ⚔️🛡🗝
+# ⚔️🛡🗝🍪
 items = {
+    "golden cookie": Item("Golden Cookie", "This cookie is said to provide immortality and great powers. It is said to be guarded by the 'Cookie Monster'.", "Legendary"),
     "torch": LightSource("Torch", "Length of wood with tar rags wrapped around one end.", "common"),
     "key": Item("Key", "Small golden key. There is an inscription in the handle but its faded.", "common"),
     "sword": Weapon("Sword of Fernwood", "Sword with a bronze handle and cross. It isn't as sharp as it once was, but is better than a stick!", "common", 5, 3),
@@ -38,6 +39,7 @@ room["foyer"].items.append(items["key"])
 room["overlook"].items.append(items["key"])
 room["treasure"].items.append(items["sword"])
 room["treasure"].items.append(items["shield"])
+room["treasure"].items.append(items["golden cookie"])
 # print(room["foyer"].items)
 
 welcome_message = "Welcome to the dungeon game, would you like to play? (yes/no)"

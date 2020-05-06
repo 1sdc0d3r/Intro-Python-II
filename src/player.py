@@ -1,4 +1,5 @@
 from textwrap import wrap
+from sys import exit
 
 
 class Player:
@@ -18,25 +19,32 @@ class Player:
 
     def move(self, direction):
         direction = direction[0]
-        if f"{direction}_to" in self.current_room.__dict__:
+        if hasattr(self.current_room, f"{direction}_to"):
             self.current_room = getattr(self.current_room, f"{direction}_to")
             print(self.current_room)
         else:
             print(f"This direction doesn't lead anywere. What would you like to do?")
 
     def pick_up(self, commandItem):
+        if commandItem == None:
+            commandItem = input(
+                "What item would you like to pickup?\n🎲 ").lower().strip()
         for item in self.current_room.items:
-            if commandItem == item.__dict__["name"].lower():
+            if commandItem in getattr(item, "name").lower():
                 self.inventory.append(item)
                 self.current_room.items.remove(item)
                 print(f"You added the {item} to your inventory.\n{self}")
-                break
+                if getattr(item, "name") == "Golden Cookie":
+                    print("you win")  # todo add win message here
+                    exit()
+                else:
+                    break
         else:
             print(f"{commandItem} was not found...")
 
     def drop(self, commandItem):
         if self.inventory:
-            print("item", commandItem)
+            # print("item", commandItem)
             if commandItem == None:
                 commandItem = input(
                     f"Which item would you like to leave behind?\n{self}\n🎲 ").lower().strip()
