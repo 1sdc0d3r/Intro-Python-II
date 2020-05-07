@@ -1,5 +1,6 @@
 from textwrap import wrap
 from sys import exit
+from data import messages
 
 
 class Player:
@@ -30,14 +31,13 @@ class Player:
             commandItem = input(
                 "What item would you like to pickup?\n🎲 ").lower().strip()
         for item in self.current_room.items:
-            if commandItem in getattr(item, "name").lower():
+            if commandItem in getattr(item, "name").lower().split(" "):
                 self.inventory.append(item)
                 self.current_room.items.remove(item)
                 print(f"You added the {item} to your inventory.\n{self}")
                 if getattr(item, "name") == "Golden Cookie":
                     # todo add win message here
-                    print(
-                        "🏁 You have found the Golden Cookie! You may have found eternal life and power beyond your knowledge!")
+                    print(messages["cookie"])
                     exit()
                 else:
                     break
@@ -50,13 +50,14 @@ class Player:
                 commandItem = input(
                     f"Which item would you like to leave behind?\n{self}\n🎲 ").lower().strip()
             for item in self.inventory:
-                if commandItem == getattr(item, "name").lower():
+                if commandItem in getattr(item, "name").lower().split(" "):
                     self.inventory.remove(item)
                     self.current_room.items.append(item)
                     print(
                         f"You dropped the {item}. \nItems currently in your bag: {self}")
                     break
-                # todo fix this else statement
-                print(f"{item} was not found in your bag...")
+                # todo fix this else statement (every item not found prints)
+                else:
+                    print(f"{item} was not found in your bag...")
         else:
             print("🎒There is nothing in your bag. See what you can find!")

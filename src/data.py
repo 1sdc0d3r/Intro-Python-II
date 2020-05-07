@@ -1,6 +1,14 @@
 from room import Room
 from item import Item, LightSource, Weapon, Shield
 
+commands = {
+    "direction": {"n", "e", "s", "w", "north", "east", "south", "west"},
+    "item": {"pickup", "get", "take", "drop", "use", "inspect"},
+    "actions": {"search", "look", "block", "attack"},
+    "player": {"inventory", "room", "location"},
+    "gameplay": {"q", "quit", "help"}
+}
+
 #! Declare all rooms
 room = {
     'outside': Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
@@ -19,9 +27,17 @@ items = {
     "golden cookie": Item("Golden Cookie", "This cookie is said to provide immortality and great powers. It is said to be guarded by the 'Cookie Monster'.", "Legendary"),
     "torch": LightSource("Torch", "Length of wood with tar rags wrapped around one end.", "common"),
     "key": Item("Key", "Small golden key. There is an inscription in the handle but its faded.", "common"),
-    "sword": Weapon("Sword of Fernwood", "Sword with a bronze handle and cross. It isn't as sharp as it once was, but is better than a stick!", "common", 5, 3),
+    "sword": Weapon("Sword of Ironwood", "Sword with a bronze handle and cross. It isn't as sharp as it once was, but is better than a stick!", "common", 5, 3),
     "shield": Shield("Shield of Fernwood", "Battered and scarred round shield. It has seen many battles. It may break with a mighty blow.", "common", 7)
 }
+
+messages = {
+    "welcome": "Welcome to the dungeon game, would you like to play? (yes/no)",
+    "objective": "This game is a choose your own adventure game. Use your wits to navigate and discover the lost kingdom of Shalooma. Your quest is to find exotic treasures, fight monstors, and to find the Golden Cookie. This cookie is said to be guarded by fierce monsters, but gives the user eternal life and fame. Good luck on your quest Adventurer!",
+    "quit": "Sorry to see you go...",
+    "cookie": "🏁 You have found the Golden Cookie! You may have found eternal life and power beyond your knowledge!"
+}
+
 
 #! Link rooms together
 room['outside'].n_to = room['foyer']
@@ -45,11 +61,3 @@ room["treasure"].items.append(items["golden cookie"])
 welcome_message = "Welcome to the dungeon game, would you like to play? (yes/no)"
 quit_message = "Sorry to see you go..."
 game_objective = "This game is a choose your own adventure game. Use your wits to navigate and discover the lost kingdom of Shalooma. Your quest is to find exotic treasures, fight monstors, and to find the Golden Cookie. This cookie is said to be guarded by fierce monsters, but gives the user eternal life and fame. Good luck on your quest Adventurer!"
-
-commands = {
-    "direction": {"n", "e", "s", "w", "north", "east", "south", "west"},
-    "item": {"pickup", "get", "take", "drop", "use", "inspect"},
-    "actions": {"search", "look", "block", "attack"},
-    "player": {"inventory"},
-    "gameplay": {"q", "quit", "help"}
-}
