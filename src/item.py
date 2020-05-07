@@ -8,7 +8,7 @@ class Item:
         return self.name
 
     def inspect(self):
-        print(self.description)
+        print(f"{self.name} - {self.description}")
 
 
 class LightSource(Item):

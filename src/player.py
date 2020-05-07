@@ -26,11 +26,11 @@ class Player:
             print(f"This direction doesn't lead anywere. What would you like to do?")
 
     def pick_up(self, commandItem):
-        if commandItem == None:
+        if not commandItem:
             commandItem = input(
                 "What item would you like to pickup?\n🎲 ").lower().strip()
         for item in self.current_room.items:
-            if commandItem in getattr(item, "name").lower():
+            if commandItem == getattr(item, "name").lower():
                 self.inventory.append(item)
                 self.current_room.items.remove(item)
                 print(f"You added the {item} to your inventory.\n{self}")
@@ -44,11 +44,11 @@ class Player:
 
     def drop(self, commandItem):
         if self.inventory:
-            if commandItem == None:
+            if not commandItem:
                 commandItem = input(
                     f"Which item would you like to leave behind?\n{self}\n🎲 ").lower().strip()
             for item in self.inventory:
-                if commandItem in getattr(item, "name").lower():
+                if commandItem == getattr(item, "name").lower():
                     self.inventory.remove(item)
                     self.current_room.items.append(item)
                     print(
