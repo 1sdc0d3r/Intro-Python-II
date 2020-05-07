@@ -10,7 +10,7 @@ commands = {
 }
 
 #! Declare all rooms
-room = {
+rooms = {
     'outside': Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
 
     'foyer': Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east."),
@@ -40,23 +40,23 @@ messages = {
 
 
 #! Link rooms together
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+rooms['outside'].n_to = rooms['foyer']
+rooms['foyer'].s_to = rooms['outside']
+rooms['foyer'].n_to = rooms['overlook']
+rooms['foyer'].e_to = rooms['narrow']
+rooms['overlook'].s_to = rooms['foyer']
+rooms['narrow'].w_to = rooms['foyer']
+rooms['narrow'].n_to = rooms['treasure']
+rooms['treasure'].s_to = rooms['narrow']
 
 #! Add items to rooms
-room["foyer"].items.append(items["torch"])
-room["foyer"].items.append(items["key"])
-room["overlook"].items.append(items["key"])
-room["treasure"].items.append(items["sword"])
-room["treasure"].items.append(items["shield"])
-room["treasure"].items.append(items["golden cookie"])
-# print(room["foyer"].items)
+rooms["foyer"].items.append(items["torch"])
+rooms["foyer"].items.append(items["key"])
+rooms["overlook"].items.append(items["key"])
+rooms["treasure"].items.append(items["sword"])
+rooms["treasure"].items.append(items["shield"])
+rooms["treasure"].items.append(items["golden cookie"])
+# print(rooms["foyer"].items)
 
 welcome_message = "Welcome to the dungeon game, would you like to play? (yes/no)"
 quit_message = "Sorry to see you go..."

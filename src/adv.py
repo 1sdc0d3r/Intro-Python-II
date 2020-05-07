@@ -3,7 +3,7 @@ from sys import exit
 from os import system, path
 from textwrap import wrap
 from player import Player
-from data import room, items, messages, welcome_message, quit_message, game_objective, commands
+from data import messages, rooms, items,  commands
 from parser import parser
 import pickle  # to save
 
@@ -19,14 +19,14 @@ elif input(f"Load Game?(yes/no) ♻️ ").strip().lower() in ("y", "yes"):
     else:
         print("😱 No game saved...")
 else:
-    player = Player(input("🧞‍♂️ Enter player name: "), room["outside"])
+    player = Player(input("🧞‍♂️ Enter player name: "), rooms["outside"])
     system("clear")
-
 
 welcome = f"Welcome {player.name}\n\n"
 for line in wrap(messages["objective"], width=100):
     welcome += f"{line}\n"
-print(f"{messages['welcome']}\n\n{player.current_room}\nFor help type 'Help'.")
+print(
+    f"{welcome}\n\n{player.current_room}\nFor help type 'Help'.")
 
 #! REPL
 while True:
@@ -50,19 +50,12 @@ while True:
             if not parsedCommand["n"]:
                 parsedCommand["n"] = input(
                     f"What Item would you like to inspect?\n🎲 ").lower().strip()
-            for item in player.current_room.items:
-                if parsedCommand["n"] in getattr(item, "name").lower().split():
+            for item in player.inventory + player.current_room.items:
+                if parsedCommand["n"] in getattr(item, "name").lower().strip().split():
                     item.inspect()
                     break
-
-                else:
-                    for item in player.inventory:
-                        if parsedCommand["n"] in getattr(item, "name").lower().split():
-                            item.inspect()
-                            break
-                    # todo fix this else statement here
-                    else:
-                        print(f"{item} was not found...")
+                elif item == player.current_room.items[-1]:
+                    print(f"{item} was not found...")
 
     # * Actions
     elif parsedCommand["v"] in commands["actions"]:

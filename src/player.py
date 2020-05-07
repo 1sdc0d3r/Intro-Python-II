@@ -36,7 +36,6 @@ class Player:
                 self.current_room.items.remove(item)
                 print(f"You added the {item} to your inventory.\n{self}")
                 if getattr(item, "name") == "Golden Cookie":
-                    # todo add win message here
                     print(messages["cookie"])
                     exit()
                 else:
@@ -56,8 +55,7 @@ class Player:
                     print(
                         f"You dropped the {item}. \nItems currently in your bag: {self}")
                     break
-                # todo fix this else statement (every item not found prints)
-                else:
+                elif item == self.inventory[-1]:
                     print(f"{item} was not found in your bag...")
         else:
             print("🎒There is nothing in your bag. See what you can find!")
