@@ -1,12 +1,11 @@
 # Import modules
 from sys import exit
-import os.path
 from os import sys, path
 from textwrap import wrap
-from data import room, items, welcome_message, quit_message, game_objective, commands
 from player import Player
+from data import room, items, welcome_message, quit_message, game_objective, commands
 from parser import parser
-import pickle
+import pickle  # to save
 
 print(chr(27) + "[2J")  # * clear terminal
 
@@ -19,14 +18,16 @@ elif input(f"Load Game?(yes/no) ♻️ ").strip().lower() in ("y", "yes"):
         player = pickle.load(open("savefile.p", "rb"))
         print(chr(27) + "[2J")  # * clear terminal
     else:
-        print("No game saved...")
+        print("😱 No game saved...")
 else:
-    player = Player(input("Enter player name: "), room["outside"])
+    player = Player(input("🧞‍♂️ Enter player name: "), room["outside"])
+    print(chr(27) + "[2J")  # * clear terminal
 
-welcome = f"Welcome {player.name}\n\nFor help type 'Help'."
-for line in wrap(game_objective, width=50):
-    welcome += line
-print(f"{welcome}\n\n{player.current_room}\n")
+
+welcome = f"Welcome {player.name}\n\n"
+for line in wrap(game_objective, width=100):
+    welcome += f"{line}\n"
+print(f"{welcome}\n\n{player.current_room}\nFor help type 'Help'.")
 
 #! REPL
 while True:
@@ -113,17 +114,16 @@ while True:
     else:
         print("unknown command, for help type 'help'")
 
-# todo add save functionality
 if input("Save Game? 🏁 ").lower().strip() in ("y", "yes"):
     if path.exists("savefile.p"):
         if input("Existing save. Overwrite data? (yes/no) # ") in ("y", "yes"):
             pickle.dump(player, open("savefile.p", "wb"))
             print("Game Saved!")
         else:
-            print("Game not saved...")
+            print("🚩 Game not saved...")
     else:
         pickle.dump(player, open("savefile.p", "wb"))
-        print("Game Saved!")
+        print("✅ Game Saved!")
 
 print(quit_message)
 exit()

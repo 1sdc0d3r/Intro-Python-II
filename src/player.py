@@ -30,12 +30,14 @@ class Player:
             commandItem = input(
                 "What item would you like to pickup?\n🎲 ").lower().strip()
         for item in self.current_room.items:
-            if commandItem == getattr(item, "name").lower():
+            if commandItem in getattr(item, "name").lower():
                 self.inventory.append(item)
                 self.current_room.items.remove(item)
                 print(f"You added the {item} to your inventory.\n{self}")
                 if getattr(item, "name") == "Golden Cookie":
-                    print("you win")  # todo add win message here
+                    # todo add win message here
+                    print(
+                        "🏁 You have found the Golden Cookie! You may have found eternal life and power beyond your knowledge!")
                     exit()
                 else:
                     break
