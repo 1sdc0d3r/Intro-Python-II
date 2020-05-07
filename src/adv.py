@@ -1,67 +1,36 @@
 # Import modules
 from sys import exit
-import os
+import os.path
+from os import sys, path
 from textwrap import wrap
-from data import room, items, welcome_message, quit_message, game_objective
+from data import room, items, welcome_message, quit_message, game_objective, commands
 from player import Player
+from parser import parser
+import pickle
 
+print(chr(27) + "[2J")  # * clear terminal
 
-# ? allow new commands to be added as they 'unlock' them
-commands = {
-    "direction": {"n", "e", "s", "w", "north", "east", "south", "west"},
-    "item": {"pickup", "get", "take", "drop", "use", "inspect"},
-    "actions": {"search", "look", "block", "attack"},
-    "player": {"inventory"},
-    "gameplay": {"q", "quit", "help"}
-}
-
-
-parsedCommand = {
-    "verb": None,
-    "noun": None
-}
-
-
-def parser(command):
-    if not command:
-        print("Please enter a command...")
-    else:
-        parsedCommand.clear()
-        for word in command.split(" "):
-            for values in commands.values():
-                if word in values:
-                    parsedCommand["verb"] = word
-                    break
-                elif len(command.split(" ")) > 1:
-                    parsedCommand["noun"] = word
-                else:
-                    parsedCommand["noun"] = None
-
-    # print("parsed", parsedCommand)
-
-
-# * clear terminal
-print(chr(27) + "[2J")
-# os.system("cls")
-
-command = input(f"{welcome_message}\n🎲 ").lower().strip()
-
-# * Check to see if the player wants to play
-if command in ("n", "no"):
+if input(f"{welcome_message}\n🎲 ").lower().strip() in ("n", "no"):
     print(quit_message)
     exit()
+
+elif input(f"Load Game?(yes/no) ♻️ ").strip().lower() in ("y", "yes"):
+    if path.exists("savefile.p"):
+        player = pickle.load(open("savefile.p", "rb"))
+    else:
+        print("No game saved...")
 else:
     player = Player(input("Enter player name: "), room["outside"])
-    # player = Player("Jack", room["outside"])
-    for line in wrap(game_objective, width=120):
-        print(line)
-    print(f"\n{player.current_room}\nUse n, s, e, w to move.")
+
+for line in wrap(game_objective, width=120):
+    print(line)
+print(f"\n{player.current_room}\nUse n, s, e, w to move.")
 
 #! REPL
 while True:
     # * Prompt User Command
     command = input("🎲 ").lower().strip()
-    parser(command)
+    parsedCommand = parser(command)
 
     # * Move Direction Commands
     if parsedCommand["verb"] in commands["direction"]:
@@ -82,12 +51,12 @@ while True:
                 parsedCommand["noun"] = input(
                     f"What Item would you like to inspect?\n🎲 ").lower().strip()
             for item in player.current_room.items:
-                if parsedCommand["noun"] == getattr(item, "name").lower():
+                if parsedCommand["noun"] in getattr(item, "name").lower():
                     item.inspect()
 
                 else:
                     for item in player.inventory:
-                        if parsedCommand["noun"] == getattr(item, "name").lower():
+                        if parsedCommand["noun"] in getattr(item, "name").lower():
                             item.inspect()
 
                         else:
@@ -116,19 +85,19 @@ while True:
                 command = input(
                     "What would you like help with?\n[1] Game Objective [2] Commands [9] Exit\n🎲 ").lower().strip()
 
-                if command == "game objective" or command == "1":
+                if command in ("1", "game objective"):
                     print("\n")
                     for line in wrap(game_objective, width=100):
                         print(line)
                     print("\n")
 
-                elif command == "commands" or command == "2":
+                elif command in ("2", "commands"):
                     print("\n")
                     for key in commands:
                         print(f"{key}: {', '.join(commands[key])}")
                     print("\n")
 
-                elif (command == "exit" or command == "9"):
+                elif command in ("9", "exit"):
                     break
 
                 else:
@@ -141,4 +110,16 @@ while True:
         print("unknown command, for help type 'help'")
 
 # todo add save functionality
+if input("Save Game? 🏁 ").lower().strip() in ("y", "yes"):
+    if path.exists("savefile.p"):
+        if input("Existing save. Overwrite data? (yes/no) # ") in ("y", "yes"):
+            pickle.dump(player, open("savefile.p", "wb"))
+            print("Game Saved!")
+        else:
+            print("Game not saved...")
+    else:
+        pickle.dump(player, open("savefile.p", "wb"))
+        print("Game Saved!")
+
 print(quit_message)
+exit()

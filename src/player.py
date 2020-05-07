@@ -12,7 +12,7 @@ class Player:
         if self.inventory:
             response = "🎒Items currently in your bag: "
             for item in self.inventory:
-                response += f"{item.__dict__['name']}, "
+                response += f"{getattr(item, 'name')}, "
             return response.rstrip(", ")
         else:
             return "🎒Your bag is empty..."
@@ -44,18 +44,17 @@ class Player:
 
     def drop(self, commandItem):
         if self.inventory:
-            # print("item", commandItem)
             if commandItem == None:
                 commandItem = input(
                     f"Which item would you like to leave behind?\n{self}\n🎲 ").lower().strip()
             for item in self.inventory:
-                if commandItem == item.__dict__["name"].lower():
+                if commandItem in getattr(item, "name").lower():
                     self.inventory.remove(item)
                     self.current_room.items.append(item)
                     print(
                         f"You dropped the {item}. \nItems currently in your bag: {self}")
                     break
-                elif commandItem == item.__dict__["name"].lower():
-                    print(f"{item} was not found in your bag...")
+                # todo fix this else statement
+                print(f"{item} was not found in your bag...")
         else:
             print("🎒There is nothing in your bag. See what you can find!")

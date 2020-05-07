@@ -3,7 +3,6 @@ from textwrap import wrap
 
 
 class Room:
-    # ? params include directions?
     def __init__(self, name, desc):
         self.name = name
         self.desc = desc
