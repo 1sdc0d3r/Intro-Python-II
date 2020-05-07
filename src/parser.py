@@ -9,7 +9,6 @@ def parser(command):
         for word in command.split(" "):
             if word in [cmd for values in commands.values() for cmd in values]:
                 parsedCommand["v"] = word
-                break
             elif len(command.split(" ")) > 1:
                 parsedCommand["n"] = word
 

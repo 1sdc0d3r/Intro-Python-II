@@ -8,7 +8,8 @@ class Item:
         return self.name
 
     def inspect(self):
-        print(f"{self.name} - {self.description}")
+        print(
+            f"{self.name} - {self.description}\n    [Type: {type(self).__name__}, Rarity: {self.rarity}]")
 
 
 class LightSource(Item):
@@ -16,7 +17,8 @@ class LightSource(Item):
         super().__init__(name, description, rarity)
 
     def on_drop(self):
-        print("Are you sure you want to leave behind your light source?")
+        return input(
+            "Are you sure you want to leave behind your light source?\n💡") in ("n", "no")
 
 
 class Weapon(Item):
@@ -24,8 +26,16 @@ class Weapon(Item):
         super().__init__(name, description, rarity)
         self.damage = damage
 
+    def inspect(self):
+        print(
+            f"{self.name} - {self.description}\n    [Type: {type(self).__name__}, Damage:{self.damage}, Rarity: {self.rarity}]")
+
 
 class Shield(Item):
     def __init__(self, name, description, rarity, block):
         super().__init__(name, description, rarity)
         self.block = block
+
+    def inspect(self):
+        print(
+            f"{self.name} - {self.description}\n    [Type: {type(self).__name__}, Block:{self.block}, Rarity: {self.rarity}]")

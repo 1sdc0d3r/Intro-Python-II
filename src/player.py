@@ -1,6 +1,7 @@
 from textwrap import wrap
 from sys import exit
 from data import messages
+import item as Item
 
 
 class Player:
@@ -8,6 +9,7 @@ class Player:
         self.name = name
         self.current_room = current_room
         self.inventory = []
+        self.health = 20
 
     def __str__(self):
         if self.inventory:
@@ -34,7 +36,9 @@ class Player:
             if commandItem in getattr(item, "name").lower().split(" "):
                 self.inventory.append(item)
                 self.current_room.items.remove(item)
-                print(f"You added the {item} to your inventory.\n{self}")
+                print(
+                    f"You added the {item} to your inventory.\n{self}")
+
                 if getattr(item, "name") == "Golden Cookie":
                     print(messages["cookie"])
                     exit()
@@ -49,12 +53,16 @@ class Player:
                 commandItem = input(
                     f"Which item would you like to leave behind?\n{self}\n🎲 ").lower().strip()
             for item in self.inventory:
+
                 if commandItem in getattr(item, "name").lower().split(" "):
+                    if isinstance(item, Item.LightSource) and item.on_drop():
+                        print(f"{item} was not dropped.\n{self}")
+                        break
                     self.inventory.remove(item)
                     self.current_room.items.append(item)
-                    print(
-                        f"You dropped the {item}. \nItems currently in your bag: {self}")
+                    print(f"You dropped the {item}.\n{self}")
                     break
+
                 elif item == self.inventory[-1]:
                     print(f"{item} was not found in your bag...")
         else:

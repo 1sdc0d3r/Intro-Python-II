@@ -8,7 +8,7 @@ from parser import parser
 import pickle  # to save
 
 system("clear")
-if input(f"{messages['welcome']}\n🎲 ").lower().strip() in ("n", "no"):
+if input(f"{messages['begin']}\n🎲 ").lower().strip() in ("n", "no"):
     print(messages["quit"])
     exit()
 
@@ -26,10 +26,10 @@ welcome = f"Welcome {player.name}\n\n"
 for line in wrap(messages["objective"], width=100):
     welcome += f"{line}\n"
 print(
-    f"{welcome}\n\n{player.current_room}\nFor help type 'Help'.")
+    f"{welcome}\n{messages['instructions']}\n\n{player.current_room}\n")
 
 #! REPL
-while True:
+while True and player.health > -10:
     print("\n")
     command = input("🎲 ").lower().strip()
     parsedCommand = parser(command)
@@ -37,6 +37,9 @@ while True:
     # * Move Direction
     if parsedCommand["v"] in commands["direction"]:
         player.move(parsedCommand["v"])
+        if type(player.current_room).__name__ == "Trap":
+            player.health -= player.current_room.damage
+            print(f"Health: {player.health}")
 
     # * Items
     elif parsedCommand["v"] in commands["item"]:
@@ -72,9 +75,10 @@ while True:
     elif parsedCommand["v"] in commands["player"]:
         if parsedCommand["v"] == "inventory":
             print(player)
-        elif parsedCommand["v"] in commands["player"]:
-            if parsedCommand["v"] in ("room", "location"):
-                print(player.current_room)
+        elif parsedCommand["v"] in ("room", "location"):
+            print(player.current_room)
+        elif parsedCommand["v"] in ("hp", "health"):
+            print(f"㏋ Your current health is: {player.health}")
 
     # * Help
     elif parsedCommand["v"] in commands["gameplay"]:
@@ -107,16 +111,19 @@ while True:
     else:
         print("unknown command, for help type 'help'")
 
-if input("Save Game? 🏁 ").lower().strip() in ("y", "yes"):
-    if path.exists("savefile.p"):
-        if input("Existing save. Overwrite data? (yes/no) # ") in ("y", "yes"):
-            pickle.dump(player, open("savefile.p", "wb"))
-            print("Game Saved!")
+if player.health > -10:
+    if input("Save Game? 🏁 ").lower().strip() in ("y", "yes"):
+        if path.exists("savefile.p"):
+            if input("Existing save. Overwrite data? (yes/no) # ") in ("y", "yes"):
+                pickle.dump(player, open("savefile.p", "wb"))
+                print("Game Saved!")
+            else:
+                print("🚩 Game not saved...")
         else:
-            print("🚩 Game not saved...")
-    else:
-        pickle.dump(player, open("savefile.p", "wb"))
-        print("✅ Game Saved!")
+            pickle.dump(player, open("savefile.p", "wb"))
+            print("✅ Game Saved!")
+    print(messages["quit"])
+else:
+    print(messages["death"])
 
-print(messages["quit"])
 exit()

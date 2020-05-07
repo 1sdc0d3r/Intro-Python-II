@@ -1,5 +1,7 @@
 # Implement a class to hold room information. This should have name and description attributes.
 from textwrap import wrap
+import data
+from sys import exit
 
 
 class Room:
@@ -15,19 +17,14 @@ class Room:
 
         return response.strip()
 
-        # class List(Room):
-        #     def __init__(self, name, desc, items):
-        #         super().__init__(name, desc)
-        #         self.items = items
 
-        #     def __str__(self):
-        #         return f"You are in the {self.name}. {self.desc}. Items in the room are: {self.items}"
+class Trap(Room):
+    def __init__(self, name, desc, damage):
+        super().__init__(name, desc)
+        self.damage = damage
 
-
-kitchen = {
-    "name": "Kitchen",
-    "desc": "This is where the food magic happens!",
-    "items": ["knife", "bottle", "carrot"]
-}
-
-# room = Room(kitchen["name"], kitchen["desc"])
+    def __str__(self):
+        if self.name.lower() == "pitfall":
+            return f"You encountered a {self.name} trap! {self.desc}"
+        else:
+            return f"You encountered a {self.name} trap!"
